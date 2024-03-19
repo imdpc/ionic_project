@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">macj</string>
+    <string name="title_activity_main">macj</string>
+    <string name="package_name">ionic.macj</string>
+    <string name="custom_url_scheme">ionic.macj</string>
+</resources>
