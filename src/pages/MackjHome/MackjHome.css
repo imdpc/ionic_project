@@ -1,0 +1,27 @@
+/* .form-inputs-cln {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  overflow: hidden;
+} */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  overflow: hidden;
+}
+.ion-flex-btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+.ion-button-submit-download {
+  width: 10em;
+}
+.fsdfsdfdsfd {
+  font-size: 14px;
+}
+ion-button {
+  text-transform: none; /* or capitalize, uppercase, etc. */
+}
