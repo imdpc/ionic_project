@@ -12,7 +12,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React, { useState } from "react";
-import './Manage.css'
+import "./Manage.css";
 const Manage: React.FC = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
 
@@ -53,15 +53,50 @@ const Manage: React.FC = () => {
             expand="block"
             // onClick={handleSubmit}
           >
-            Refresh
+            Create
           </IonButton>
           <IonButton
             className="ion-button-submit-download"
             expand="block"
             // onClick={handleSubmit}
           >
-            Download
+            Delete
           </IonButton>
+        </div>
+        <div className="available-templates-container">
+          <p>Client Presentation</p>{" "}
+          <p>Manage Macj Client/Team Inspecction Session</p>
+          <IonButton
+            className="ion-button-Start-Macj-Client-Team-Inspection"
+            expand="block"
+            // onClick={handleSubmit}
+          >
+            Start Macj Client/Team Inspection
+          </IonButton>
+        </div>
+        <div className="available-templates-container">
+          <p>Avaialble Inspection</p>
+
+          <p>
+            Select an existing inspection to continue working on it. When you're
+            done go to the Sync tab to upload it to the cloud
+          </p>
+          <div className="ion-flex-btns">
+            <IonButton
+              className="ion-button-submit-download"
+              expand="block"
+              // onClick={handleSubmit}
+            >
+              Open
+            </IonButton>
+            <IonButton
+              className="ion-button-submit-download"
+              expand="block"
+              // onClick={handleSubmit}
+            >
+              Options
+            </IonButton>
+          </div>
         </div>
       </IonContent>
     </IonPage>

@@ -37,11 +37,11 @@ setupIonicReact();
 const App: React.FC = () => (
   <>
     <IonApp>
-      <IonHeader>
+      {/* <IonHeader>
         <IonToolbar>
           <IonTitle>Mackj</IonTitle>
         </IonToolbar>
-      </IonHeader>
+      </IonHeader> */}
       <IonContent>
         <IonReactRouter>
           <IonRouterOutlet

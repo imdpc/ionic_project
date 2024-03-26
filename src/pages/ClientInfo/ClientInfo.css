@@ -1,0 +1,27 @@
+.square-icon-width {
+  width: 5em;
+  height: 5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+.item-for-empty-square {
+}
+.all-the-input-fields-in-client-info-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.client-info-main-first-div {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1em 0;
+}
+.date-and-time-picker-client-info {
+  padding: 1em 0;
+}
+.textarea-for-client-info {
+  height: 10em;
+}
