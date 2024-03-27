@@ -37,19 +37,19 @@ const ClientInfo: React.FC = () => {
   };
 
   // Function to save form data to local storage
-  const saveDataToLocal = () => {
-    localStorage.setItem("clientFormData", JSON.stringify(formData));
-  };
+  // const saveDataToLocal = () => {
+  //   localStorage.setItem("clientFormData", JSON.stringify(formData));
+  // };
 
-  // Function to display saved data in an alert box
-  const displayDataInAlert = () => {
-    const savedData = localStorage.getItem("clientFormData");
-    if (savedData) {
-      alert(savedData);
-    } else {
-      alert("No data saved yet.");
-    }
-  };
+  // // Function to display saved data in an alert box
+  // const displayDataInAlert = () => {
+  //   const savedData = localStorage.getItem("clientFormData");
+  //   if (savedData) {
+  //     alert(savedData);
+  //   } else {
+  //     alert("No data saved yet.");
+  //   }
+  // };
   return (
     <>
       <IonPage>
@@ -246,13 +246,13 @@ const ClientInfo: React.FC = () => {
               Signature
             </IonButton>
           </div>
-          {/* Button to save data and display in alert */}
+          {/* Button to save data and display in alert
           <IonButton expand="block" onClick={saveDataToLocal}>
             Save Data to Local Storage
           </IonButton>
           <IonButton expand="block" onClick={displayDataInAlert}>
             Display Data from Local Storage
-          </IonButton>
+          </IonButton> */}
         </IonContent>
       </IonPage>
     </>

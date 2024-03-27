@@ -18,11 +18,18 @@ const MackjHome: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [selectedValue, setSelectedValue] = useState<string>("");
-
+  const [templateFromCloud, setTemplateFromCloud] = useState<
+    string | undefined
+  >();
   const handleSelectionChange = (event: CustomEvent) => {
     setSelectedValue(event.detail.value);
   };
-
+  const handleSelection = (
+    value: string,
+    setState: React.Dispatch<React.SetStateAction<string | undefined>>
+  ) => {
+    setState(value);
+  };
   const handleEmailChange = (e: any) => {
     setEmail(e.target.value);
   };
@@ -71,17 +78,25 @@ const MackjHome: React.FC = () => {
           </div>
           <div className="download-template-container-from-cloud">
             <p>Download Template From Cloud</p>
-            <IonItem>
-              <IonLabel>Select an option</IonLabel>
-              <IonSelect
-                value={selectedValue}
-                onIonChange={handleSelectionChange}
-              >
-                <IonSelectOption value="option1">Option 1</IonSelectOption>
-                <IonSelectOption value="option2">Option 2</IonSelectOption>
-                <IonSelectOption value="option3">Option 3</IonSelectOption>
-              </IonSelect>
-            </IonItem>
+            <IonSelect
+              value={templateFromCloud}
+              placeholder="Select One"
+              onIonChange={(e) =>
+                handleSelection(e.detail.value, setTemplateFromCloud)
+              }
+              interface="popover"
+            >
+              {[
+                "Template From Cloud",
+                "Template From Cloud",
+                "Template From Cloud",
+                "Template From Cloud",
+              ].map((option) => (
+                <IonSelectOption key={option} value={option}>
+                  {option}
+                </IonSelectOption>
+              ))}
+            </IonSelect>
             <p>
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officiis
               id quas exercitationem in accusantium,

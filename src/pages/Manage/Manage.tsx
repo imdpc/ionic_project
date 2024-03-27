@@ -15,9 +15,15 @@ import React, { useState } from "react";
 import "./Manage.css";
 const Manage: React.FC = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
+  const [availableTemplates, setAvailableTemplates] = useState<
+    string | undefined
+  >();
 
-  const handleSelectionChange = (event: CustomEvent) => {
-    setSelectedValue(event.detail.value);
+  const handleSelection = (
+    value: string,
+    setState: React.Dispatch<React.SetStateAction<string | undefined>>
+  ) => {
+    setState(value);
   };
   return (
     <IonPage className="ion-padding">
@@ -25,17 +31,24 @@ const Manage: React.FC = () => {
         <p>Account Logged In</p>
         <div className="available-templates-container">
           <p>Avaialble Templates</p>
-          <IonItem>
-            <IonLabel>Select an option</IonLabel>
-            <IonSelect
-              value={selectedValue}
-              onIonChange={handleSelectionChange}
-            >
-              <IonSelectOption value="option1">Option 1</IonSelectOption>
-              <IonSelectOption value="option2">Option 2</IonSelectOption>
-              <IonSelectOption value="option3">Option 3</IonSelectOption>
-            </IonSelect>
-          </IonItem>
+          <IonSelect
+            value={availableTemplates}
+            placeholder="Select One"
+            onIonChange={(e) =>
+              handleSelection(e.detail.value, setAvailableTemplates)
+            }
+            interface="popover"
+          >
+            {[
+              "Avaialble Templates",
+              "Avaialble Templates",
+              "Avaialble Templates",
+            ].map((option) => (
+              <IonSelectOption key={option} value={option}>
+                {option}
+              </IonSelectOption>
+            ))}
+          </IonSelect>
           <IonItem>
             {/* <IonLabel position="floating">Password</IonLabel> */}
             <IonInput placeholder="Name the inspection" />
