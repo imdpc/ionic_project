@@ -31,7 +31,7 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 import MackjHome from "./pages/MackjHome/MackjHome";
 import MackjTabs from "./pages/MackjTabs/MackjTabs";
-
+import "./global.css";
 setupIonicReact();
 
 const App: React.FC = () => (

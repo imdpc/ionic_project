@@ -1,0 +1,40 @@
+.each-slide-check-setting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.checked-and-drop-down-list-setting-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.slider-check-button-bottm-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.buttons-for-advanced-tools-support-setting-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.collapsible-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.two-btn-reset-default-save {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+.ion-button-bottom-section {
+  width: 10em;
+}
+.version-of-macj-app {
+  text-align: center;
+}
+.main-bgc-color {
+  background-color: lightgray;
+}
