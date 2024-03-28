@@ -25,3 +25,11 @@
 .textarea-for-client-info {
   height: 10em;
 }
+.selected-image {
+  width: 15em;
+  height: 10em;
+}
+.cover-photo-section-upload {
+  display: flex;
+  justify-content: center;
+}

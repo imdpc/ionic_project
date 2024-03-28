@@ -114,6 +114,7 @@ import Manage from "../Manage/Manage";
 import ClientInfo from "../ClientInfo/ClientInfo";
 import Inspect from "../Inspect/Inspect";
 import Setting from "../Setting/Setting";
+import SignaturePage from "../Signature/Signature";
 
 function MackjTabs() {
   return (
@@ -130,6 +131,8 @@ function MackjTabs() {
             <Route path="/clientinfo" component={ClientInfo} exact={true} />
             <Route path="/inspect" component={Inspect} exact={true} />
             <Route path="/setting" component={Setting} exact={true} />
+            <Route path="/signature" component={SignaturePage} exact={true} />
+
           </IonRouterOutlet>
 
           <IonTabBar slot="top">

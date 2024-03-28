@@ -12,14 +12,32 @@ import {
   IonTextarea,
   IonTitle,
   IonToolbar,
+  IonActionSheet,
+  IonDatetime,
 } from "@ionic/react";
 import { Icon } from "ionicons/dist/types/components/icon/icon";
-import { phonePortrait, phonePortraitSharp, square } from "ionicons/icons";
+import {
+  phonePortrait,
+  phonePortraitSharp,
+  square,
+  camera,
+  images,
+} from "ionicons/icons";
 import React, { useState } from "react";
 import "./ClientInfo.css";
-import { IonDatetime } from "@ionic/react";
+import SignaturePage from "../Signature/Signature";
+import { Link } from "react-router-dom";
 
 const ClientInfo: React.FC = () => {
+  const [showSignaturePage, setShowSignaturePage] = useState(false);
+
+  const handleSignatureButtonClick = () => {
+    setShowSignaturePage(true);
+  };
+
+  const handleCloseSignaturePage = () => {
+    setShowSignaturePage(false);
+  };
   // State to hold input field values
   const [formData, setFormData] = useState({
     firstName: "",
@@ -35,7 +53,70 @@ const ClientInfo: React.FC = () => {
       [key]: value,
     });
   };
+  const [showActionSheet, setShowActionSheet] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+  const handleActionSheet = () => {
+    setShowActionSheet(true);
+  };
+
+  const handleActionSheetCancel = () => {
+    setShowActionSheet(false);
+  };
+
+  const handleCameraClick = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const video = document.createElement("video");
+      video.srcObject = stream;
+      document.body.appendChild(video);
+      video.play();
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext("2d");
+      context?.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const imageData = canvas.toDataURL("image/png");
+      setSelectedImage(imageData);
+      video.pause();
+      stream.getVideoTracks()[0].stop();
+      document.body.removeChild(video);
+      setShowActionSheet(false);
+    } catch (error) {
+      console.error("Error accessing camera:", error);
+      setShowActionSheet(false);
+    }
+  };
+
+  const handleGalleryClick = () => {
+    const inputElement = document.createElement("input");
+    inputElement.type = "file";
+    inputElement.accept = "image/*";
+    inputElement.onchange = (event) => {
+      const file = (event.target as HTMLInputElement)?.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const result = reader.result as string;
+          setSelectedImage(result);
+          setShowActionSheet(false);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+    inputElement.click();
+  };
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        setSelectedImage(result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   // Function to save form data to local storage
   // const saveDataToLocal = () => {
   //   localStorage.setItem("clientFormData", JSON.stringify(formData));
@@ -69,9 +150,55 @@ const ClientInfo: React.FC = () => {
             >
               Import from Macj Office
             </IonButton>
-            <IonItem className="item-for-empty-square">
+            {/* <IonItem className="item-for-empty-square">
               <IonIcon icon={square} className="square-icon-width" />
-            </IonItem>
+            </IonItem> */}
+            <div className="cover-photo-section-upload">
+              <IonItem
+                className="item-for-empty-square"
+                onClick={handleActionSheet}
+              >
+                {selectedImage ? (
+                  <img
+                    src={selectedImage}
+                    alt="Selected"
+                    className="selected-image"
+                  />
+                ) : (
+                  <IonIcon icon={square} className="square-icon-width" />
+                )}
+              </IonItem>
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={{ display: "none" }}
+                id="file-input"
+              />
+
+              <IonActionSheet
+                isOpen={showActionSheet}
+                onDidDismiss={handleActionSheetCancel}
+                buttons={[
+                  {
+                    text: "Take Photo",
+                    icon: camera,
+                    handler: handleCameraClick,
+                  },
+                  {
+                    text: "Choose from Gallery",
+                    icon: images,
+                    handler: handleGalleryClick,
+                  },
+                  {
+                    text: "Cancel",
+                    role: "cancel",
+                    handler: handleActionSheetCancel,
+                  },
+                ]}
+              ></IonActionSheet>
+            </div>
           </div>
           <div className="all-the-input-fields-in-client-info-screen">
             <IonItem>
@@ -238,13 +365,19 @@ const ClientInfo: React.FC = () => {
               style={{ height: "10em" }}
             ></IonTextarea>
             <p>SINGATURE SECTION</p>
-            <IonButton
-              className="ion-button-import-from-isn-macj-offic"
-              expand="block"
-              // onClick={handleSubmit}
-            >
-              Signature
-            </IonButton>
+            <Link to="./signature">
+              <IonButton
+                onClick={handleSignatureButtonClick}
+                className="ion-button-import-from-isn-macj-offic"
+                expand="block"
+                // onClick={handleSubmit}
+              >
+                Signature
+              </IonButton>
+            </Link>
+            {showSignaturePage && (
+              <SignaturePage onClose={handleCloseSignaturePage} />
+            )}
           </div>
           {/* Button to save data and display in alert
           <IonButton expand="block" onClick={saveDataToLocal}>
