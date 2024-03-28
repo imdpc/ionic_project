@@ -1,0 +1,13 @@
+.edit-icon-and-text {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+.headers-for-the-page {
+  height: 2em;
+  background-color: #01619d;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  margin: 0;
+}

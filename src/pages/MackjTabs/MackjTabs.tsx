@@ -115,6 +115,10 @@ import ClientInfo from "../ClientInfo/ClientInfo";
 import Inspect from "../Inspect/Inspect";
 import Setting from "../Setting/Setting";
 import SignaturePage from "../Signature/Signature";
+import SubDetailsList from "../SubDetailsList/SubDetailsList";
+import SubMenuList from "./../SubMenuList/SubMenuList";
+import SubMenduDetailsList from "./../SubDetailsList/SubDetailsList";
+import EditComment from "../SubDetailsList/EditComment/EditComment";
 
 function MackjTabs() {
   return (
@@ -132,7 +136,14 @@ function MackjTabs() {
             <Route path="/inspect" component={Inspect} exact={true} />
             <Route path="/setting" component={Setting} exact={true} />
             <Route path="/signature" component={SignaturePage} exact={true} />
-
+            <Route path="/signature" component={SignaturePage} exact={true} />
+            <Route path="/submenulist" component={SubMenuList} exact={true} />
+            <Route path="//edit-comment" component={EditComment} exact={true} />
+            <Route
+              path="/submenulistdetails"
+              component={SubMenduDetailsList}
+              exact={true}
+            />
           </IonRouterOutlet>
 
           <IonTabBar slot="top">

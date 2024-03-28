@@ -10,6 +10,7 @@ import {
 import { earth } from "ionicons/icons";
 import React from "react";
 import "./Inspect.css";
+import { Link } from "react-router-dom";
 const Inspect: React.FC = () => {
   return (
     <IonPage>
@@ -21,6 +22,12 @@ const Inspect: React.FC = () => {
             // className="earth-icon"
             style={{ width: "40px", height: "40px" }}
           />
+        </div>
+        <div className="list-of-sub-menu-items-for-inspection">
+          <Link to="./submenulist" style={{ textDecoration: "none" }}>
+            <p>6.5.1 Roof</p>
+          </Link>
+          <p>6.5.1 Exterior</p>
         </div>
       </IonContent>
     </IonPage>

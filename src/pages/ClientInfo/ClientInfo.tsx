@@ -69,7 +69,6 @@ const ClientInfo: React.FC = () => {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       const video = document.createElement("video");
       video.srcObject = stream;
-      document.body.appendChild(video);
       video.play();
       const canvas = document.createElement("canvas");
       canvas.width = video.videoWidth;
@@ -78,16 +77,13 @@ const ClientInfo: React.FC = () => {
       context?.drawImage(video, 0, 0, canvas.width, canvas.height);
       const imageData = canvas.toDataURL("image/png");
       setSelectedImage(imageData);
-      video.pause();
       stream.getVideoTracks()[0].stop();
-      document.body.removeChild(video);
-      setShowActionSheet(false);
     } catch (error) {
       console.error("Error accessing camera:", error);
+    } finally {
       setShowActionSheet(false);
     }
   };
-
   const handleGalleryClick = () => {
     const inputElement = document.createElement("input");
     inputElement.type = "file";
