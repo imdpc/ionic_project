@@ -7,43 +7,52 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-
+import "./Signature.css";
 const SignaturePage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
+  const [signatures, setSignatures] = useState<string[]>([]);
+  const canvasRefs = useRef<HTMLCanvasElement[]>([]);
 
-  const startDrawing = (event: React.TouchEvent | React.MouseEvent) => {
-    setIsDrawing(true);
-    const canvas = canvasRef.current;
+  const startDrawing = (
+    index: number,
+    event: React.TouchEvent | React.MouseEvent
+  ) => {
+    const canvas = canvasRefs.current[index];
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const { offsetX, offsetY } = event.nativeEvent;
+    const rect = canvas.getBoundingClientRect();
+    const x =
+      event.type === "touchstart" ? event.touches[0].clientX : event.clientX;
+    const y =
+      event.type === "touchstart" ? event.touches[0].clientY : event.clientY;
     ctx.beginPath();
-    ctx.moveTo(offsetX, offsetY);
+    ctx.moveTo(x - rect.left, y - rect.top);
   };
 
   const endDrawing = () => {
-    setIsDrawing(false);
+    // Optional: Add logic to handle end of drawing
   };
 
-  const draw = (event: React.TouchEvent | React.MouseEvent) => {
-    if (!isDrawing) return;
-    const canvas = canvasRef.current;
+  const draw = (index: number, event: React.TouchEvent | React.MouseEvent) => {
+    const canvas = canvasRefs.current[index];
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const { offsetX, offsetY } = event.nativeEvent;
-    ctx.lineTo(offsetX, offsetY);
+    const rect = canvas.getBoundingClientRect();
+    const x =
+      event.type === "touchmove" ? event.touches[0].clientX : event.clientX;
+    const y =
+      event.type === "touchmove" ? event.touches[0].clientY : event.clientY;
+    ctx.lineTo(x - rect.left, y - rect.top);
     ctx.stroke();
   };
 
-  const clearCanvas = () => {
-    const canvas = canvasRef.current;
+  const clearCanvas = (index: number) => {
+    const canvas = canvasRefs.current[index];
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
@@ -52,9 +61,12 @@ const SignaturePage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   };
 
-  const saveSignature = () => {
-    // Implement logic to save the signature, e.g., send it to the server
-    onClose();
+  const saveSignature = (index: number) => {
+    const canvas = canvasRefs.current[index];
+    if (!canvas) return;
+
+    const signature = canvas.toDataURL(); // Get the signature as a data URL
+    setSignatures((prevSignatures) => [...prevSignatures, signature]);
   };
 
   return (
@@ -65,20 +77,32 @@ const SignaturePage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+        {signatures.map((signature, index) => (
+          <div key={index}>
+            <img src={signature} alt={`Signature ${index}`} />
+          </div>
+        ))}
         <canvas
-          ref={canvasRef}
+          ref={(ref) => (canvasRefs.current[0] = ref)}
           width={window.innerWidth}
           height={window.innerHeight - 120} // Adjust height as needed
-          onTouchStart={startDrawing}
+          onTouchStart={(event) => startDrawing(0, event)}
           onTouchEnd={endDrawing}
-          onTouchMove={draw}
-          onMouseDown={startDrawing}
+          onTouchMove={(event) => draw(0, event)}
+          onMouseDown={(event) => startDrawing(0, event)}
           onMouseUp={endDrawing}
-          onMouseMove={draw}
-          style={{ border: "1px solid black" }}
+          onMouseMove={(event) => draw(0, event)}
+          style={{
+            border: "1px solid black",
+            marginBottom: "20px",
+            width: "100%",
+            height: "80%",
+          }}
         ></canvas>
-        <IonButton onClick={clearCanvas}>Clear</IonButton>
-        <IonButton onClick={saveSignature}>Done</IonButton>
+        <div className="clear-save-btn-for-signature">
+          <IonButton onClick={() => clearCanvas(0)}>Clear</IonButton>
+          <IonButton onClick={() => saveSignature(0)}>Save</IonButton>
+        </div>
       </IonContent>
     </IonPage>
   );
