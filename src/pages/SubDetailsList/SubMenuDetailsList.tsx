@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
   IonButton,
   IonContent,
@@ -8,23 +10,38 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { pencilOutline, search } from "ionicons/icons";
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 
-import "./SubDetailsList.css";
-const SubMenduDetailsList: React.FC = () => {
+import "./SubMenuDetailsList.css";
+
+const SubMenuDetailsList: React.FC = () => {
   const [searchText, setSearchText] = useState("");
+  const [points, setPoints] = useState<string[]>([]); // State to store the points
   const history = useHistory();
 
-  const handleEdit = () => {
-    // Navigate to the edit comment page
-    history.push("/edit-comment");
+  useEffect(() => {
+    // Retrieve points from local storage when the component mounts
+    const storedPoints = localStorage.getItem("points");
+    if (storedPoints) {
+      setPoints(JSON.parse(storedPoints));
+    } else {
+      // If no points are found in local storage, set some default points
+      setPoints(["Built up", "Built down", "Built left"]);
+    }
+  }, []);
+
+  const handleEdit = (point: string) => {
+    // Navigate to the edit comment page with the selected point
+    history.push({
+      pathname: "/edit-comment",
+      state: { comment: point },
+    });
   };
 
   const handleSearch = () => {
     // Implement search functionality here
     console.log("Searching for:", searchText);
   };
+
   return (
     <IonPage>
       <IonHeader>
@@ -63,17 +80,23 @@ const SubMenduDetailsList: React.FC = () => {
             <p>N/A</p>
             <p>None</p>
           </section>
-        </div>{" "}
+        </div>
         <div className="section-for-types-and-header">
           <h6 className="headers-for-the-page">Roof Type</h6>
           <section className="" style={{ paddingLeft: "" }}>
-            <section className="edit-icon-and-text" onClick={handleEdit}>
-              <IonIcon
-                icon={pencilOutline}
-                style={{ width: "30px", height: "40px" }}
-              />
-              <p>Built up</p>
-            </section>
+            {points.map((point, index) => (
+              <section
+                className="edit-icon-and-text"
+                key={index}
+                onClick={() => handleEdit(point)}
+              >
+                <IonIcon
+                  icon={pencilOutline}
+                  style={{ width: "30px", height: "40px" }}
+                />
+                <p>{point}</p>
+              </section>
+            ))}
           </section>
         </div>
       </IonContent>
@@ -81,4 +104,4 @@ const SubMenduDetailsList: React.FC = () => {
   );
 };
 
-export default SubMenduDetailsList;
+export default SubMenuDetailsList;
