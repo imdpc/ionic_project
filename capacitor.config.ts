@@ -1,9 +1,9 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'ionic.macj',
+  appId: 'com.example.app',
   appName: 'macj',
-  webDir: 'dist',
+  webDir: 'build',
   server: {
     androidScheme: 'https'
   }
